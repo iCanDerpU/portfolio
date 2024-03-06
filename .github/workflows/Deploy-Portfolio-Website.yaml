@@ -31,6 +31,6 @@ jobs:
         run: |
           sam build -t CloudFormation/ec2-cloudfront.yaml
           sam deploy \
-          --config-file samconfig.toml
-          --config-env website
+          --config-file samconfig.toml \
+          --config-env website \
           --role-arn ${{ env.AWS_EXECUTION_ROLE_ARN }}
