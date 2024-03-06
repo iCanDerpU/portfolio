@@ -1,0 +1,105 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Parameters:
+  Ec2ImageId:
+    Type: AWS::EC2::Image::Id
+    Description: The AMI to create the instance from
+
+  Ec2KeyPairName:
+    Type: AWS::EC2::KeyPair::KeyName
+    Description: The key pair name to connect to EC2
+
+  Ec2InstanceType:
+    Type: String
+    Description: The type of the EC2 instance
+
+  VpcId:
+    Type: AWS::EC2::VPC::Id
+    Description: The Vpc to create the instance in
+
+  ProductName:
+    Type: String
+    Description: The product name
+
+  SubnetId:
+    Type: AWS::EC2::Subnet::Id
+    Description: The Subnet ID of the VPC
+
+  AcmArn:
+    Type: String
+    Description: The ACM ARN to connect to CloudFront
+
+  DomainName:
+    Type: String
+    Description: Domain name to associate the CloudFront distribution with
+     
+
+Resources:
+  WebInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
+            VolumeType: gp3
+            VolumeSize: 30
+      InstanceType: !Ref Ec2InstanceType
+      ImageId: !Ref Ec2ImageId
+      KeyName: !Ref Ec2KeyPairName
+      SecurityGroupIds:
+        -  !GetAtt SecGroup.GroupId
+      SubnetId: !Ref SubnetId
+      Tags:
+        - Key: Name
+          Value: !Ref ProductName
+
+  SecGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: !Sub Security group for ${ProductName}
+      GroupName: !Sub ${ProductName}-sg
+      SecurityGroupEgress: 
+        - CidrIp: 0.0.0.0/0
+          IpProtocol: -1
+      SecurityGroupIngress: 
+        - CidrIp: 0.0.0.0/0
+          IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+        - CidrIp: 0.0.0.0/0
+          IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+      VpcId: !Ref VpcId
+
+  CloudFront:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Enabled: true
+        Aliases:
+          - !Ref DomainName
+          - !Sub www.${DomainName}
+        Origins:
+          - Id: !Sub ${ProductName}-origin
+            DomainName: !GetAtt WebInstance.PublicDnsName
+            CustomOriginConfig:
+              OriginProtocolPolicy: http-only
+        DefaultCacheBehavior:
+          AllowedMethods:
+            - GET
+            - HEAD
+            - OPTIONS
+            - PUT
+            - PATCH
+            - POST
+            - DELETE
+          CachePolicyId: 4135ea2d-6df8-44a3-9df3-4b5a84be39ad # Managed-CachingDisabled
+          OriginRequestPolicyId: 216adef6-5c7f-47e4-b989-5492eafa07d3 # Managed-AllViewer
+          ViewerProtocolPolicy: redirect-to-https
+          Compress: true
+          TargetOriginId: !Sub ${ProductName}-origin
+        ViewerCertificate:
+          AcmCertificateArn: !Ref AcmArn
+          MinimumProtocolVersion: TLSv1.2_2021
+          SslSupportMethod: sni-only
