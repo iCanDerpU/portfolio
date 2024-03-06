@@ -21,7 +21,7 @@ jobs:
       - name: Set up AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          role-to-assume: arn:aws:iam::767397699663:role/Github-Portfolio-Deploy-OIDC-Role-bne9k9M9ZGEc
           aws-region: us-east-1
 
       - name: Deploy SAM template
