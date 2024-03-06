@@ -1,0 +1,34 @@
+name: Deploy Portfolio Website
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  AWS_ROLE_ARN: arn:aws:iam::767397699663:role/Github-Portfolio-Deploy-OIDC-Role-bne9k9M9ZGEc
+  AWS_EXECUTION_ROLE_ARN: arn:aws:iam::767397699663:role/GithubDerpPortfolioDeployExecRole
+
+jobs:
+  deploy:
+    name: Deploy Website
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          aws-region: us-east-1
+
+      - name: Deploy SAM template
+        run: |
+          sam build -t CloudFormation/ec2-cloudfront.yaml
+          sam deploy \
+          --config-file samconfig.toml
+          --config-env website
+          --role-arn ${{ env.AWS_EXECUTION_ROLE_ARN }}
+          --no-fail-on-empty-changeset

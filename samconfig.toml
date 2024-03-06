@@ -1,0 +1,12 @@
+version = 0.1
+
+[website]
+[website.deploy]
+[website.deploy.parameters]
+stack_name="derp-portfolio"
+s3_prefix="derp-portfolio"
+region="us-east-1"
+confirm_changeset=false
+capabilities="CAPABILITY_IAM CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND"
+tags="info:owner=derp"
+
