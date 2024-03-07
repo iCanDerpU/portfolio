@@ -9,4 +9,13 @@ region="us-east-1"
 confirm_changeset=false
 capabilities="CAPABILITY_IAM CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND"
 tags="info:owner=derp"
-
+parameter_overrides=[
+    "ProductName=derp-portfolio",
+    "Ec2ImageId=ami-065057f0f7fab6a29",
+    "Ec2InstanceType=t2.micro",
+    "Ec2KeyPairName=derp",
+    "VpcId=vpc-0ba0d8a55f1cc318b",
+    "SubnetId=subnet-0f7ad2195814d86f5",
+    "DomainName=vkaramoutas.xyz",
+    "AcmArn=arn:aws:acm:us-east-1:767397699663:certificate/6be6f058-f9bf-4582-991e-78ad96262694"
+]
