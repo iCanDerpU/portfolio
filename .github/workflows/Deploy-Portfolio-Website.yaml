@@ -34,6 +34,7 @@ jobs:
   deploy:
     name: Deploy Website
     runs-on: ubuntu-latest
+    needs: upload-artifacts
     permissions:
       id-token: write
       contents: read
