@@ -41,7 +41,6 @@ Resources:
   Ec2Cloudfront:
     Type: AWS::CloudFormation::Stack
     Properties:
-      StackName: !Sub ${AWS::StackName}-EC2-Cloudfront
       TemplateURL: !Sub https://${CFBucket}.s3.amazonaws.com/cloudformation/ec2-cloudfront.yaml
       Parameters:
         Ec2ImageId: !Ref Ec2ImageId
