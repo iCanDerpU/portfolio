@@ -10,6 +10,7 @@ confirm_changeset=false
 capabilities="CAPABILITY_IAM CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND"
 tags="info:owner=derp"
 parameter_overrides=[
+    "CFBucket=derp-portfolio-artifacts",
     "ProductName=derp-portfolio",
     "Ec2ImageId=ami-065057f0f7fab6a29",
     "Ec2InstanceType=t2.micro",

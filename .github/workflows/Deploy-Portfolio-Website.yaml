@@ -8,15 +8,35 @@ on:
 env:
   AWS_ROLE_ARN: arn:aws:iam::767397699663:role/Github-Portfolio-Deploy-OIDC-Role-bne9k9M9ZGEc
   AWS_EXECUTION_ROLE_ARN: arn:aws:iam::767397699663:role/GithubDerpPortfolioDeployExecRole
+  AWS_ARTIFACTS_CLOUDFORMATION_URI: s3://derp-portfolio-artifacts/cloudformation
 
 jobs:
+  upload-artifacts:
+    name: Upload templates to S3
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: Set up AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          aws-region: us-east-1
+      
+      - name: Upload templates
+        run: |
+        aws s3 sync ./CloudFormation ${{ env.AWS_ARTIFACTS_CLOUDFORMATION_URI }}
+
   deploy:
     name: Deploy Website
     runs-on: ubuntu-latest
     permissions:
       id-token: write
       contents: read
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -29,7 +49,7 @@ jobs:
 
       - name: Deploy SAM template
         run: |
-          sam build -t CloudFormation/ec2-cloudfront.yaml
+          sam build -t CloudFormation/main.yaml
           sam deploy \
           --config-file samconfig.toml \
           --config-env website \

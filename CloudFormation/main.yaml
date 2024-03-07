@@ -1,0 +1,54 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Parameters:
+  CFBucket:
+    Type: String
+    Description: The S3 Bucket name to fetch the templates from
+  
+  Ec2ImageId:
+    Type: AWS::EC2::Image::Id
+    Description: The AMI to create the instance from
+
+  Ec2KeyPairName:
+    Type: AWS::EC2::KeyPair::KeyName
+    Description: The key pair name to connect to EC2
+
+  Ec2InstanceType:
+    Type: String
+    Description: The type of the EC2 instance
+
+  VpcId:
+    Type: AWS::EC2::VPC::Id
+    Description: The Vpc to create the instance in
+
+  ProductName:
+    Type: String
+    Description: The product name
+
+  SubnetId:
+    Type: AWS::EC2::Subnet::Id
+    Description: The Subnet ID of the VPC
+
+  AcmArn:
+    Type: String
+    Description: The ACM ARN to connect to CloudFront
+
+  DomainName:
+    Type: String
+    Description: Domain name to associate the CloudFront distribution with
+
+Resources:
+  Ec2Cloudfront:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      StackName: !Sub ${AWS::StackName}-EC2-Cloudfront
+      TemplateURL: !Sub https://${CFBucket}.s3.amazonaws.com/cloudformation/ec2-cloudfront.yaml
+      Parameters:
+        Ec2ImageId: !Ref Ec2ImageId
+        Ec2KeyPairName: !Ref Ec2KeyPairName
+        Ec2InstanceType: !Ref Ec2InstanceType
+        VpcId: !Ref VpcId
+        ProductName: !Ref ProductName
+        SubnetId: !Ref SubnetId
+        AcmArn: !Ref AcmArn
+        DomainName: !Ref DomainName
