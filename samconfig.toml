@@ -18,6 +18,6 @@ parameter_overrides=[
     "VpcId=vpc-0ba0d8a55f1cc318b",
     "SubnetId=subnet-0f7ad2195814d86f5",
     "DomainName=vkaramoutas.xyz",
-    "AcmArn=arn:aws:acm:us-east-1:767397699663:certificate/6be6f058-f9bf-4582-991e-78ad96262694"
+    "AcmArn=arn:aws:acm:us-east-1:767397699663:certificate/6be6f058-f9bf-4582-991e-78ad96262694",
     "IdentityArn=arn:aws:ses:us-east-1:767397699663:identity/vkaramoutas.xyz"
 ]
