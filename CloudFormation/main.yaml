@@ -37,6 +37,11 @@ Parameters:
     Type: String
     Description: Domain name to associate the CloudFront distribution with
 
+  IdentityArn:
+    Type: String
+    Description: SES Identity to send emails from
+
+
 Resources:
   Ec2Cloudfront:
     Type: AWS::CloudFormation::Stack
@@ -51,3 +56,9 @@ Resources:
         SubnetId: !Ref SubnetId
         AcmArn: !Ref AcmArn
         DomainName: !Ref DomainName
+  Mailer:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Sub https://${CFBucket}.s3.amazonaws.com/cloudformation/mailer.yaml
+      Parameters:
+        IdentityArn: !Ref IdentityArn
