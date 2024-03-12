@@ -21,19 +21,19 @@ Parameters:
 #       Architectures:
 #         - x86_64
 #       Role: !GetAtt ContactLambdaRole.Arn
-  Resources:
-    ContactLambda:
-      Type: AWS::Lambda::Function
-      Properties:
-        FunctionName: !Sub ${AWS::StackName}-contact
-        Handler: lambda_function.lambda_handler
-        Runtime: python3.10
-        Code:
-          S3Bucket: !Select [0, !Split [/, !Ref LambdaUri]] # Extracts the bucket name
-          S3Key: !Select [1, !Split [/, !Ref LambdaUri]] # Extracts the object key
-        Architectures:
-          - x86_64
-        Role: !GetAtt ContactLambdaRole.Arn
+Resources:
+  ContactLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub ${AWS::StackName}-contact
+      Handler: lambda_function.lambda_handler
+      Runtime: python3.10
+      Code:
+        S3Bucket: !Select [0, !Split [/, !Ref LambdaUri]] # Extracts the bucket name
+        S3Key: !Select [1, !Split [/, !Ref LambdaUri]] # Extracts the object key
+      Architectures:
+        - x86_64
+      Role: !GetAtt ContactLambdaRole.Arn
 
 
   ContactLambdaRole:
