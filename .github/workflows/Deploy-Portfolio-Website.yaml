@@ -9,7 +9,7 @@ env:
   AWS_ROLE_ARN: arn:aws:iam::767397699663:role/Github-Portfolio-Deploy-OIDC-Role-bne9k9M9ZGEc
   AWS_EXECUTION_ROLE_ARN: arn:aws:iam::767397699663:role/GithubDerpPortfolioDeployExecRole
   AWS_ARTIFACTS_CLOUDFORMATION_URI: s3://derp-portfolio-artifacts/cloudformation
-  AWS_PACKAGE_URI: s3://derp-portfolio-artifacts/artifacts
+  AWS_ARTIFACTS_LAMBDAS_URI: s3://derp-portfolio-artifacts/lambdas
   TEMPLATE_PATH: CloudFormation/main.yaml
   REGION: us-east-1
 
@@ -50,16 +50,13 @@ jobs:
         with:
           role-to-assume: ${{ env.AWS_ROLE_ARN }}
           aws-region: us-east-1
-
-      - name: Build resources
-        run: sam build --template ${{ env.TEMPLATE_PATH }} --use-container
-      
-      - name: Upload artifacts to production artifact buckets
+        
+      - name: Upload Lambdas to S3
         run: |
-          sam package \
-            --s3-bucket ${{ env.AWS_PACKAGE_URI }} \
-            --region ${{ env.REGION }} \
-            --output-template-file packaged-prod.yaml
+          mkdir lambda-zip
+          zip -r lambda-zip/contact-vkaramoutas.zip Lambdas/contact-vkaramoutas
+
+          aws s3 sync ./lambda-zip ${{ env.AWS_ARTIFACTS_LAMBDAS_URI }}
 
       - name: Deploy SAM template
         run: |
