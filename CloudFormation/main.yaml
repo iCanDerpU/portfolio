@@ -65,3 +65,4 @@ Resources:
       TemplateURL: !Sub https://${CFBucket}.s3.amazonaws.com/cloudformation/mailer.yaml
       Parameters:
         IdentityArn: !Ref IdentityArn
+        CodeUri: !Ref CodeUri
