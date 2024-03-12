@@ -17,7 +17,7 @@ Resources:
       FunctionName: !Sub ${AWS::StackName}-contact
       Handler: lambda_function.lambda_handler
       Runtime: python3.10
-      CodeUri: !Sub "s3://${LambdaUri}/contact-vkaramoutas.zip"
+      CodeUri: !Ref LambdaUri
       Architectures:
         - x86_64
       Role: !GetAtt ContactLambdaRole.Arn
