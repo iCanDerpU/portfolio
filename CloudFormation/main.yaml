@@ -41,7 +41,7 @@ Parameters:
     Type: String
     Description: SES Identity to send emails from
 
-  CodeUri:
+  LambdaUri:
     Type: String
     Description: S3 URI pointing to the ContactLambda function
 
@@ -65,4 +65,4 @@ Resources:
       TemplateURL: !Sub https://${CFBucket}.s3.amazonaws.com/cloudformation/mailer.yaml
       Parameters:
         IdentityArn: !Ref IdentityArn
-        CodeUri: !Ref CodeUri
+        LambdaUri: !Ref LambdaUri
