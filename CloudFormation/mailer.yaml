@@ -5,6 +5,10 @@ Parameters:
   IdentityArn:
     Type: String
     Description: SES Identity to send emails from
+    
+  CodeUri:
+    Type: String
+    Description: S3 URI pointing to the ContactLambda function
 
 Resources:
   ContactLambda:
@@ -13,7 +17,7 @@ Resources:
       FunctionName: !Sub ${AWS::StackName}-contact
       Handler: lambda_function.lambda_handler
       Runtime: python3.10
-      CodeUri: s3://derp-portfolio-artifacts/lambdas/contact-vkaramoutas.zip
+      CodeUri: !Ref CodeUri
       Architectures:
         - x86_64
       Role: !GetAtt ContactLambdaRole.Arn
