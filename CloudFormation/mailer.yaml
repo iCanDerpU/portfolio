@@ -31,8 +31,6 @@ Resources:
       Code:
         S3Bucket: !Select [0, !Split [/, !Ref LambdaUri]] # Extracts the bucket name
         S3Key: !Select [1, !Split [/, !Ref LambdaUri]] # Extracts the object key
-      Architectures:
-        - x86_64
       Role: !GetAtt ContactLambdaRole.Arn
 
 
