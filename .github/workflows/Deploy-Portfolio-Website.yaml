@@ -52,13 +52,13 @@ jobs:
           aws-region: us-east-1
 
       - name: Build resources
-        run: sam build --template ${env.TEMPLATE_PATH} --use-container
+        run: sam build --template ${{ env.TEMPLATE_PATH }} --use-container
       
       - name: Upload artifacts to production artifact buckets
         run: |
           sam package \
-            --s3-bucket ${env.AWS_PACKAGE_URI} \
-            --region ${env.REGION} \
+            --s3-bucket ${{ env.AWS_PACKAGE_URI }} \
+            --region ${{ env.REGION }} \
             --output-template-file packaged-prod.yaml
 
       - name: Deploy SAM template
@@ -68,4 +68,4 @@ jobs:
           --config-file samconfig.toml \
           --config-env website \
           --role-arn ${{ env.AWS_EXECUTION_ROLE_ARN }}
-          --s3-bucket ${env.AWS_PACKAGE_URI}
+          --s3-bucket ${{ env.AWS_PACKAGE_URI }}
