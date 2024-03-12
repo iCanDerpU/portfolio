@@ -65,4 +65,3 @@ jobs:
           --config-file samconfig.toml \
           --config-env website \
           --role-arn ${{ env.AWS_EXECUTION_ROLE_ARN }}
-          --s3-bucket ${{ env.AWS_PACKAGE_URI }}
