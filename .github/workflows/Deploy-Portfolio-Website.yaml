@@ -60,7 +60,7 @@ jobs:
 
       - name: Deploy SAM template
         run: |
-          sam build -t package-prod.yaml
+          sam build -t ${{ env.TEMPLATE_PATH }}
           sam deploy \
           --config-file samconfig.toml \
           --config-env website \
