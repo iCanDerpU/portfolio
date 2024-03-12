@@ -53,10 +53,12 @@ jobs:
         
       - name: Upload Lambdas to S3
         run: |
+          cd Lambdas
           mkdir lambda-zip
-          zip -r lambda-zip/contact-vkaramoutas.zip Lambdas/contact-vkaramoutas
-
-          aws s3 sync ./lambda-zip ${{ env.AWS_ARTIFACTS_LAMBDAS_URI }}
+          
+          cd contact-vkaramoutas
+          zip contact-vkaramoutas.zip lambda_function.py
+          aws s3 cp contact-vkaramoutas.zip ${{ env.AWS_ARTIFACTS_LAMBDAS_URI }}/contact-vkaramoutas.zip
 
       - name: Deploy SAM template
         run: |
