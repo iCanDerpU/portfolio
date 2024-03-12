@@ -9,6 +9,9 @@ env:
   AWS_ROLE_ARN: arn:aws:iam::767397699663:role/Github-Portfolio-Deploy-OIDC-Role-bne9k9M9ZGEc
   AWS_EXECUTION_ROLE_ARN: arn:aws:iam::767397699663:role/GithubDerpPortfolioDeployExecRole
   AWS_ARTIFACTS_CLOUDFORMATION_URI: s3://derp-portfolio-artifacts/cloudformation
+  AWS_PACKAGE_URI: s3://derp-portfolio-artifacts/artifacts
+  TEMPLATE_PATH: CloudFormation/main.yaml
+  REGION: us-east-1
 
 jobs:
   upload-artifacts:
@@ -48,10 +51,21 @@ jobs:
           role-to-assume: ${{ env.AWS_ROLE_ARN }}
           aws-region: us-east-1
 
+      - name: Build resources
+        run: sam build --template ${env.TEMPLATE_PATH} --use-container
+      
+      - name: Upload artifacts to production artifact buckets
+        run: |
+          sam package \
+            --s3-bucket ${env.AWS_PACKAGE_URI} \
+            --region ${env.REGION} \
+            --output-template-file packaged-prod.yaml
+
       - name: Deploy SAM template
         run: |
-          sam build -t CloudFormation/main.yaml
+          sam build -t package-prod.yaml
           sam deploy \
           --config-file samconfig.toml \
           --config-env website \
           --role-arn ${{ env.AWS_EXECUTION_ROLE_ARN }}
+          --s3-bucket ${env.AWS_PACKAGE_URI}
