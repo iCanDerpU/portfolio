@@ -41,7 +41,7 @@ Parameters:
     Type: String
     Description: SES Identity to send emails from
 
-    CodeUri:
+  CodeUri:
     Type: String
     Description: S3 URI pointing to the ContactLambda function
 
