@@ -33,7 +33,7 @@ Resources:
       Handler: lambda_function.lambda_handler
       Runtime: python3.10
       Code:
-        S3Bucket: !Sub ${CFBucket}
+        S3Bucket: !Ref CFBucket
         S3Key: !Ref CodeKey
       Role: !GetAtt ContactLambdaRole.Arn
 
