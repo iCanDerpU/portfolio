@@ -14,17 +14,6 @@ Parameters:
     Type: String
     Description: The S3 Bucket name to fetch the templates from
 
-# Resources:
-#   ContactLambda:
-#     Type: AWS::Serverless::Function
-#     Properties:
-#       FunctionName: !Sub ${AWS::StackName}-contact
-#       Handler: lambda_function.lambda_handler
-#       Runtime: python3.10
-#       CodeUri: !Ref LambdaUri
-#       Architectures:
-#         - x86_64
-#       Role: !GetAtt ContactLambdaRole.Arn
 Resources:
   ContactLambda:
     Type: AWS::Lambda::Function

@@ -66,3 +66,4 @@ Resources:
       Parameters:
         IdentityArn: !Ref IdentityArn
         CodeKey: !Ref CodeKey
+        CFBucket: !Ref CFBucket
