@@ -6,9 +6,9 @@ Parameters:
     Type: String
     Description: SES Identity to send emails from
     
-  LambdaUri:
+  CodeKey:
     Type: String
-    Description: S3 URI pointing to the ContactLambda function
+    Description: S3 directory pointing to the ContactLambda function
 
 # Resources:
 #   ContactLambda:
@@ -30,7 +30,7 @@ Resources:
       Runtime: python3.10
       Code:
         S3Bucket: !Sub ${CFBucket}
-        S3Key: /lambdas/contact-vkaramoutas.zip
+        S3Key: !Ref CodeKey
       Role: !GetAtt ContactLambdaRole.Arn
 
 
