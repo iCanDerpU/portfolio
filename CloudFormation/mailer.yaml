@@ -10,6 +10,10 @@ Parameters:
     Type: String
     Description: S3 directory pointing to the ContactLambda function
 
+  CFBucket:
+    Type: String
+    Description: The S3 Bucket name to fetch the templates from
+
 # Resources:
 #   ContactLambda:
 #     Type: AWS::Serverless::Function
