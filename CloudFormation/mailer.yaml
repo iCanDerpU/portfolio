@@ -84,8 +84,8 @@ Resources:
         Type: MOCK
         IntegrationResponses:
           - ResponseParameters:
-              "method.response.header.Access-Control-Allow-Origin":"'*'"
-              "method.response.header.Access-Control-Allow-Methods":"'OPTIONS,POST'"
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+              "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'"
             StatusCode: "200"
               
   PostMethod:
