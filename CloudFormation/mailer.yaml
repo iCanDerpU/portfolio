@@ -58,8 +58,12 @@ Resources:
 
   ContactApiDeployment:
     Type: AWS::ApiGateway::Deployment
+    DependsOn:
+      - OptionsMethod
+      - PostMethod
     Properties:
       RestApiId: !Ref ContactApi
+
 
   ContactApiStage:
     Type: AWS::ApiGateway::Stage
