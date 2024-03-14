@@ -90,7 +90,7 @@ Resources:
           - ResponseParameters:
               "method.response.header.Access-Control-Allow-Origin": "'*'"
               "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'"
-              StatusCode: "200"
+          StatusCode: "200"
         PassthroughBehavior: WHEN_NO_MATCH
       MethodResponses:
         - StatusCode: "200"
@@ -114,7 +114,7 @@ Resources:
         IntegrationResponses:
           - ResponseParameters:
               "method.response.header.Access-Control-Allow-Origin": "'*'"
-              StatusCode: "200"
+          StatusCode: "200"
         PassthroughBehavior: WHEN_NO_MATCH
         Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${ContactLambda.Arn}/invocations"
       MethodResponses:
