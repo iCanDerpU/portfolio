@@ -50,3 +50,55 @@ Resources:
               - Effect: Allow
                 Action: ses:SendEmail
                 Resource: !Ref IdentityArn
+
+  ContactApi:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: vkaramoutas contact API
+
+  ContactApiDeployment:
+    Type: AWS::ApiGateway::Deployment
+    Properties:
+      RestApiId: !Ref ContactApi
+      StageName: !Ref 
+
+  ContactApiStage:
+    Type: AWS::ApiGateway::Stage
+    Properties:
+      DeploymentId: !Ref ContactApiDeployment
+      MethodSettings:
+        - ResourcePath: /
+          HttpMethod: OPTIONS
+        - ResourcePath: /
+          HttpMethod: POST
+      RestApiId: !Ref ContactApi
+      StageName: vkaramoutas-contact
+  
+  OptionsMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref ContactApi
+      ResourceId: !Ref ContactApi.RootResourceId
+      HttpMethod: OPTIONS
+      Integration:
+        Type: MOCK
+        IntegrationResponses:
+          - ResponseParameters:
+              "method.response.header.Access-Control-Allow-Origin":"'*'"
+              "method.response.header.Access-Control-Allow-Methods":"'OPTIONS,POST'"
+            StatusCode: "200"
+              
+  PostMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref ContactApi
+      ResourceId: !Ref ContactApiResource
+      HttpMethod: POST
+      Integration:
+        Type: AWS
+        IntegrationHttpMethod: POST
+        IntegrationResponses:
+            - ResponseParameters:
+                "method.response.header.Access-Control-Allow-Origin":"'*'"
+              StatusCode: "200"
+        Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${ContactLambda.Arn}/invocations"
