@@ -88,11 +88,18 @@ Resources:
         Type: MOCK
         IntegrationResponses:
           - ResponseParameters:
-              "method.response.headers.Access-Control-Allow-Origin": "'*'"
-              "method.response.headers.Access-Control-Allow-Methods": "'OPTIONS,POST'"
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+              "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'"
+        PassThroughBehavior: WHEN_NO_MATCH
             StatusCode: "200"
       MethodResponses:
         - StatusCode: "200"
+          ResponseModels:
+            "application/json": "Empty"
+          ResponseParameters: 
+              "method.response.header.Access-Control-Allow-Origin": false
+              "method.response.header.Access-Control-Allow-Methods": false
+
               
   PostMethod:
     Type: AWS::ApiGateway::Method
@@ -105,9 +112,14 @@ Resources:
         Type: AWS
         IntegrationHttpMethod: POST
         IntegrationResponses:
-            - ResponseParameters:
-                "method.response.headers.Access-Control-Allow-Origin": "'*'"
-              StatusCode: "200"
+          - ResponseParameters:
+              "method.response.header.Access-Control-Allow-Origin": "'*'"
+        PassThroughBehavior: WHEN_NO_MATCH
+            StatusCode: "200"
         Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${ContactLambda.Arn}/invocations"
       MethodResponses:
         - StatusCode: "200"
+          ResponseModels:
+            "application/json": "Empty"
+          ResponseParameters: 
+              "method.response.header.Access-Control-Allow-Origin": false
