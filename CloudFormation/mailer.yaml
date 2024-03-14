@@ -60,7 +60,6 @@ Resources:
     Type: AWS::ApiGateway::Deployment
     Properties:
       RestApiId: !Ref ContactApi
-      StageName: !Ref ContactApiStage
 
   ContactApiStage:
     Type: AWS::ApiGateway::Stage
