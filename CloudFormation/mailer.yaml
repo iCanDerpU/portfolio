@@ -99,6 +99,6 @@ Resources:
         IntegrationHttpMethod: POST
         IntegrationResponses:
             - ResponseParameters:
-                "method.response.header.Access-Control-Allow-Origin":"'*'"
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
               StatusCode: "200"
         Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${ContactLambda.Arn}/invocations"
