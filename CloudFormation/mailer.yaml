@@ -83,6 +83,7 @@ Resources:
       RestApiId: !Ref ContactApi
       ResourceId: !GetAtt ContactApi.RootResourceId
       HttpMethod: OPTIONS
+      AuthorizationType: NONE
       Integration:
         Type: MOCK
         IntegrationResponses:
@@ -97,6 +98,7 @@ Resources:
       RestApiId: !Ref ContactApi
       ResourceId: !GetAtt ContactApi.RootResourceId
       HttpMethod: POST
+      AuthorizationType: NONE
       Integration:
         Type: AWS
         IntegrationHttpMethod: POST
