@@ -78,7 +78,7 @@ Resources:
     Type: AWS::ApiGateway::Method
     Properties:
       RestApiId: !Ref ContactApi
-      ResourceId: !Ref ContactApi.RootResourceId
+      ResourceId: !GetAtt ContactApi.RootResourceId
       HttpMethod: OPTIONS
       Integration:
         Type: MOCK
@@ -92,7 +92,7 @@ Resources:
     Type: AWS::ApiGateway::Method
     Properties:
       RestApiId: !Ref ContactApi
-      ResourceId: !Ref ContactApiResource
+      ResourceId: !GetAtt ContactApi.RootResourceId
       HttpMethod: POST
       Integration:
         Type: AWS
