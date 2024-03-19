@@ -34,20 +34,15 @@ The infrastructure is defined and managed using CloudFormation templates. Here a
 
 To deploy the project locally or on AWS, follow these steps:
 
-1. Clone the repository:
-git clone https://github.com/iCanDerpU/portfolio.git
+1. Clone the repository.
 
-2. Navigate to the project directory:
-cd portfolio
+2. Navigate to the project directory.
 
 3. Modify the CloudFormation templates or any other files as needed.
 
-4. Commit your changes:
-git add .
-git commit -m "Your commit message"
+4. Commit your changes.
 
-5. Push changes to the repository:
-git push origin master
+5. Push changes to the repository.
 
 6. The CI/CD pipeline will automatically trigger a deployment on AWS.
 
