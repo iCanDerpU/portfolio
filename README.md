@@ -1,6 +1,6 @@
 # Personal Website/Portfolio
 
-This is my personal website/portfolio hosted at [vkaramoutas.xyz](https://vkaramoutas.xyz). The website showcases my projects, skills, and experiences. It is built using AWS services and infrastructure as code principles.
+This is my personal website/portfolio hosted at [vkaramoutas.xyz](https://vkaramoutas.xyz). The website will be used to showcase my projects, skills, and experiences. It is built using AWS services and infrastructure as code principles.
 
 ## Overview
 
